@@ -261,7 +261,7 @@ class LeadModel extends BaseApiModel implements
 
     public function getPriceWithMinorUnits(): ?float
     {
-        return isset($this->price) ? (float)$this->price : .0;
+        return isset($this->price) ? $this->price : .0;
     }
 
     /**
@@ -758,8 +758,8 @@ class LeadModel extends BaseApiModel implements
             $leadModel->setName($lead['name']);
         }
 
-        if (array_key_exists('price', $lead) && !is_null($lead['price'])) {
-            $leadModel->setPrice((float)$lead['price']);
+        if (array_key_exists('price_with_minor_units', $lead) && !is_null($lead['price_with_minor_units'])) {
+            $leadModel->setPriceWithMinorUnits($lead['price_with_minor_units']);
         }
 
         if (array_key_exists('responsible_user_id', $lead) && !is_null($lead['responsible_user_id'])) {
@@ -948,12 +948,7 @@ class LeadModel extends BaseApiModel implements
         }
 
         if (!is_null($this->getPrice())) {
-            $result['price'] = $this->getPrice();
-        }
-
-        $priceWmu = $this->getPriceWithMinorUnits();
-        if ($priceWmu !== null) {
-            $result['price_with_minor_units'] = $priceWmu;
+            $result['price'] = $this->getPriceWithMinorUnits();
         }
 
         if (!is_null($this->getResponsibleUserId())) {
