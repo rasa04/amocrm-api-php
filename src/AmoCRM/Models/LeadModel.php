@@ -947,7 +947,7 @@ class LeadModel extends BaseApiModel implements
             $result['name'] = $this->getName();
         }
 
-        if (!is_null($this->getPrice())) {
+        if (!is_null($this->getPriceWithMinorUnits())) {
             $result['price'] = $this->getPriceWithMinorUnits();
         }
 
