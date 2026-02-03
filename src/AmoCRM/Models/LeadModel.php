@@ -271,7 +271,7 @@ class LeadModel extends BaseApiModel implements
      */
     public function setPrice(?int $price): self
     {
-        $this->price = (float)$price;
+        $this->price = is_null($price) ? null : (float)$price;
 
         return $this;
     }
