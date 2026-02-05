@@ -758,6 +758,10 @@ class LeadModel extends BaseApiModel implements
             $leadModel->setName($lead['name']);
         }
 
+        if (array_key_exists('price', $lead) && !is_null($lead['price'])) {
+            $leadModel->setPrice($lead['price']);
+        }
+
         if (array_key_exists('price_with_minor_units', $lead) && !is_null($lead['price_with_minor_units'])) {
             $leadModel->setPriceWithMinorUnits($lead['price_with_minor_units']);
         }
