@@ -17,12 +17,19 @@ class LeadMinorUnitsIntegrationTest extends TestCase
 
     protected function setUp(): void
     {
-        $accessToken = new LongLivedAccessToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjMxNDNmODVhMjI5YmJjZThjNWNiOTM0OGEzODdlYmMzYmMwZWM1M2E0YzdhZjhmNDVlZjE4NjYyOGYzZDM3ZDA2NTkzODNhZmIyMTcyMDZkIn0.eyJhdWQiOiI1ZDgyMDg4OS05M2ExLTRhYWUtODBhZC1kNmY3MGUwZWM2YTMiLCJqdGkiOiIzMTQzZjg1YTIyOWJiY2U4YzVjYjkzNDhhMzg3ZWJjM2JjMGVjNTNhNGM3YWY4ZjQ1ZWYxODY2MjhmM2QzN2QwNjU5MzgzYWZiMjE3MjA2ZCIsImlhdCI6MTc3MDA0MjA2MiwibmJmIjoxNzcwMDQyMDYyLCJleHAiOjE3Nzk0OTQ0MDAsInN1YiI6Ijg0NjE3MDciLCJncmFudF90eXBlIjoiIiwiYWNjb3VudF9pZCI6Mjk4Mzc0NDEsImJhc2VfZG9tYWluIjoia29tbW8uY29tIiwidmVyc2lvbiI6Miwic2NvcGVzIjpbInB1c2hfbm90aWZpY2F0aW9ucyIsImNybSIsIm5vdGlmaWNhdGlvbnMiLCJmaWxlcyIsImZpbGVzX2RlbGV0ZSJdLCJoYXNoX3V1aWQiOiJlZjE2NmU2ZS1jNjE0LTQxNWYtYmEyMS0xMjNkMDM2NjE3NGYiLCJhcGlfZG9tYWluIjoiYXBpLm1haW42LmtvbW1vMi5jb20ifQ.WVwXq4CV-bRr1kajDYuqiRjJLTJ1bdZvf9TqTJRN2SWRPsaGVZtL4DX8XasjOmQxWwAceIDDbVOZwQqOKKdhHdAeE7Y7p5fzv_wG38VzrVSo-u_e_3uTargJQ-gJzZDh_sMPnz9JOfjaqBTwxDzAyoRLAjEhNNKEebt-7rW6xTvh0VODJFuKIaeGA6koI6z1qyTXhmhD_i37GwG485v7DUFCQmcRvUnOENfya2H1aSIjwnBjdAS9Z9fdw00b3-hVizAPtU_O8M07rdLSF41aY55BnZ_d5D0PY5pZSMIYOBAi7ntHClvy12Tz245zs1O225qeYMWLqHIhDkpvhyJNLQ');
+        $root = dirname(__DIR__, 3);
+        if (file_exists($root . '/.env')) {
+            $dotenv = new \Symfony\Component\Dotenv\Dotenv();
+            $dotenv->usePutenv(true);
+            $dotenv->load($root . '/.env');
+        }
+
+        $accessToken = new LongLivedAccessToken((string)getenv('ACCESS_TOKEN'));
 
         $this->apiClient = new AmoCRMApiClient(
-            '5d820889-93a1-4aae-80ad-d6f70e0ec6a3',
-            'G0mUlE17sGcWYRiRoVP5tihNatfFRdIX71TAWUMgUSTAvc7NwFI4d77fucQEpdg3',
-            'https://refined-grub-awfully.ngrok-free.app'
+            (string)getenv('CLIENT_ID'),
+            (string)getenv('CLIENT_SECRET'),
+            (string)getenv('REDIRECT_URI')
         );
 
         $this->apiClient->setAccessToken($accessToken)
